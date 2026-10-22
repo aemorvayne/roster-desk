@@ -1,0 +1,31 @@
+<div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-4">
+  <div><p class="eyebrow mb-2">DIRECTORY</p><h1 class="h2 mb-1">Your people</h1><p class="text-secondary mb-0">A clear view of who’s here and who has access.</p></div>
+  <span class="badge text-bg-light border px-3 py-2"><%= @users.count %> members</span>
+</div>
+<%= form_with url: bulk_users_path, data: { controller: 'selection' } do |form| %>
+  <div class="toolbar d-flex flex-wrap align-items-center gap-2 bg-white border rounded-top p-3" role="toolbar" aria-label="User actions">
+    <%= form.button 'Block', name: :operation, value: 'block', class: 'btn btn-outline-secondary', title: 'Block selected users', data: { selection_target: 'button' } %>
+    <%= form.button '↗', name: :operation, value: 'unblock', class: 'btn btn-outline-secondary icon-button', title: 'Unblock selected users', aria: { label: 'Unblock' }, data: { selection_target: 'button' } %>
+    <%= form.button '⌫', name: :operation, value: 'delete', class: 'btn btn-outline-danger icon-button', title: 'Permanently delete selected users', aria: { label: 'Delete' }, data: { selection_target: 'button' } %>
+    <span class="small text-secondary ms-2" data-selection-target="count" aria-live="polite">Select people to manage access</span>
+  </div>
+  <div class="table-responsive border border-top-0 rounded-bottom bg-white">
+    <table class="table table-hover align-middle mb-0">
+      <thead><tr>
+        <th class="selection-cell"><input class="form-check-input" type="checkbox" aria-label="Select all users" title="Select or deselect all users" data-selection-target="all" data-action="selection#toggleAll"></th>
+        <th scope="col">Name</th><th scope="col">Email</th><th scope="col">Last sign-in ↓</th><th scope="col">Status</th>
+      </tr></thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td class="selection-cell"><%= check_box_tag 'user_ids[]', user.id, false, id: "user_#{user.id}", class: 'form-check-input', aria: { label: "Select #{user.full_name}" }, data: { selection_target: 'row', action: 'selection#update' } %></td>
+            <td><span class="fw-semibold"><%= user.full_name %></span><% if user == current_user %><span class="badge text-bg-light ms-2">You</span><% end %><div class="small text-secondary"><%= user.job_position %></div></td>
+            <td><%= user.email %></td>
+            <td class="small text-secondary text-nowrap"><%= login_time(user) %></td>
+            <td><span class="badge rounded-pill <%= user.active? ? 'status-active' : 'status-blocked' %>"><%= user.status.capitalize %></span></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

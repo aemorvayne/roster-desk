@@ -1,0 +1,17 @@
+<section class="auth-panel card shadow-sm mx-auto p-4 p-md-5">
+  <p class="eyebrow">YOUR PEOPLE, IN ONE PLACE</p>
+  <h1 class="h3">Create your account</h1>
+  <p class="text-secondary">Join the directory and keep things organized.</p>
+  <% if @user.errors.any? %>
+    <div class="alert alert-danger" role="alert"><%= @user.errors.full_messages.to_sentence %></div>
+  <% end %>
+  <%= form_with model: @user, url: registration_path do |form| %>
+    <div class="mb-3"><%= form.label :full_name, class: 'form-label' %><%= form.text_field :full_name, required: true, maxlength: User::FIELD_LIMIT, autocomplete: 'name', class: 'form-control' %></div>
+    <div class="mb-3"><%= form.label :email, class: 'form-label' %><%= form.email_field :email, required: true, autocomplete: 'email', class: 'form-control' %></div>
+    <div class="mb-3"><%= form.label :job_position, 'Job title (optional)', class: 'form-label' %><%= form.text_field :job_position, autocomplete: 'organization-title', class: 'form-control' %></div>
+    <div class="mb-4"><%= form.label :password, class: 'form-label' %><%= form.password_field :password, required: true, autocomplete: 'new-password', class: 'form-control' %></div>
+    <p class="small text-secondary">Every member can manage all accounts, including their own. Use this shared space with care.</p>
+    <%= form.submit 'Create account', class: 'btn btn-primary w-100' %>
+  <% end %>
+  <p class="small text-center mt-4 mb-0">Already here? <%= link_to 'Sign in', new_session_path %></p>
+</section>

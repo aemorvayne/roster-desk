@@ -1,0 +1,35 @@
+{
+  "name": "roster-desk",
+  "private": true,
+  "scripts": {
+    "lint": "eslint public/app.js",
+    "format-check": "prettier --check public/app.js public/app.css",
+    "format": "prettier --write public/app.js public/app.css",
+    "instrument": "nyc instrument public/app.js tmp/instrumented",
+    "coverage": "nyc report"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "3.2.2",
+    "bootstrap": "5.3.8"
+  },
+  "devDependencies": {
+    "eslint": "10.13.0",
+    "nyc": "18.0.0",
+    "prettier": "3.9.10"
+  },
+  "overrides": {
+    "@istanbuljs/load-nyc-config": { "js-yaml": "4.3.2" }
+  },
+  "nyc": {
+    "all": true,
+    "include": ["public/app.js"],
+    "reporter": ["text", "html"],
+    "report-dir": "coverage/javascript",
+    "check-coverage": true,
+    "per-file": true,
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100
+  }
+}

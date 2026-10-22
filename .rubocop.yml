@@ -1,0 +1,64 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 4.0
+  SuggestExtensions: false
+  Exclude:
+    - vendor/**/*
+    - tmp/**/*
+    - coverage/**/*
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+
+Naming/RescuedExceptionsVariableName:
+  PreferredName: error
+
+Layout/EmptyLinesAroundMethodBody:
+  Enabled: true
+
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: no_empty_lines
+
+Layout/EmptyLinesAroundModuleBody:
+  EnforcedStyle: no_empty_lines
+
+Layout/EmptyLineBetweenDefs:
+  NumberOfEmptyLines: 1
+
+Layout/EmptyLinesAfterModuleInclusion:
+  Enabled: false
+
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: false
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 120
+
+Metrics/BlockLength:
+  Exclude:
+    - test/**/*
+
+Metrics/MethodLength:
+  Max: 5
+  CountAsOne: []
+
+Metrics/ClassLength:
+  Exclude:
+    - test/**/*
+
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: false
+
+Style/SymbolProc:
+  AllowedMethods:
+    - normalizes
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - test/test_helper.rb

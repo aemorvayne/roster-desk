@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Roster Desk</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <%= csrf_meta_tags %>
+    <link rel="stylesheet" href="/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="/app.css">
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <header class="border-bottom bg-white">
+      <nav class="container-fluid px-lg-5 py-3 d-flex align-items-center justify-content-between gap-3" aria-label="Main navigation">
+        <a class="brand text-decoration-none" href="/">Roster<span>Desk</span></a>
+        <% if current_user&.active? %>
+          <div class="d-flex align-items-center gap-3">
+            <span class="small text-secondary d-none d-sm-inline"><%= current_user.full_name %></span>
+            <%= button_to 'Sign out', session_path, method: :delete, class: 'btn btn-outline-secondary btn-sm' %>
+          </div>
+        <% end %>
+      </nav>
+    </header>
+    <main class="container-fluid px-lg-5 py-4">
+      <% flash.each do |kind, message| %>
+        <div class="alert <%= kind == 'alert' ? 'alert-danger' : 'alert-success' %>" role="status"><%= message %></div>
+      <% end %>
+      <%= yield %>
+    </main>
+  </body>
+</html>

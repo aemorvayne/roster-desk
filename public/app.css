@@ -1,0 +1,63 @@
+:root {
+  --bs-body-font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  --bs-body-color: #263341;
+  --bs-body-bg: #f6f8fa;
+}
+.brand {
+  color: #20374b;
+  font-size: 1.25rem;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+.brand span {
+  color: #5e7485;
+  font-weight: 400;
+}
+.eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #617587;
+}
+.auth-panel {
+  max-width: 28rem;
+  margin-top: 3rem;
+}
+.btn-primary {
+  --bs-btn-bg: #254d69;
+  --bs-btn-border-color: #254d69;
+  --bs-btn-hover-bg: #17384f;
+}
+.table > :not(caption) > * > * {
+  padding: 1rem 1.25rem;
+}
+.table thead th {
+  background: #f9fafb;
+  color: #6a7785;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.table .selection-cell {
+  width: 3rem;
+  padding-right: 0;
+}
+.form-check-input {
+  cursor: pointer;
+}
+.status-active {
+  background: #e6f3ed;
+  color: #246448;
+}
+.status-blocked {
+  background: #f3e8e8;
+  color: #874242;
+}
+.icon-button {
+  min-width: 2.65rem;
+}
+.btn,
+.form-control,
+.form-check-input {
+  transition: none;
+}

@@ -1,0 +1,15 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS', 5) %>
+  url: <%= ENV.fetch('DATABASE_URL', "postgresql://postgres@127.0.0.1:55434/roster_desk_#{Rails.env}") %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>

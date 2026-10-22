@@ -1,0 +1,30 @@
+name: Check
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: jdx/mise-action@v5.2.1
+      - uses: browser-actions/setup-chrome@v2.2.0
+      - run: mise run setup
+      - run: mise run pg-start
+      - run: RAILS_ENV=test mise run db
+      - run: mise run check
+      - run: mise run pg-stop
+        if: always()
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: coverage
+          path: coverage/
+          if-no-files-found: ignore
