@@ -43,3 +43,6 @@ run = "pg_ctl -D tmp/postgres status || pg_ctl -D tmp/postgres -l tmp/postgres.l
 
 [tasks.pg-stop]
 run = "pg_ctl -D tmp/postgres stop"
+
+[tasks.import]
+run = "\"{{ tools.ruby.path }}/bin/ruby\" bin/run.rb bundle exec rake import"
