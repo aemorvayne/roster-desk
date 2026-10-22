@@ -1,5 +1,7 @@
 import { Application, Controller } from './vendor/stimulus.js';
 
+const NO_SELECTION = 0;
+
 class SelectionController extends Controller {
   static targets = ['all', 'row', 'button', 'count'];
   connect() {
@@ -14,13 +16,13 @@ class SelectionController extends Controller {
   update() {
     const selected = this.rowTargets.filter((row) => row.checked).length;
     this.updateHeader(selected);
-    this.buttonTargets.forEach((button) => (button.disabled = selected === 0));
+    this.buttonTargets.forEach((button) => (button.disabled = selected === NO_SELECTION));
     this.countTarget.textContent = `${selected} selected`;
   }
 
   updateHeader(selected) {
-    this.allTarget.checked = selected === this.rowTargets.length;
-    this.allTarget.indeterminate = selected > 0 && !this.allTarget.checked;
+    this.allTarget.checked = selected > NO_SELECTION && selected === this.rowTargets.length;
+    this.allTarget.indeterminate = selected > NO_SELECTION && !this.allTarget.checked;
   }
 }
 

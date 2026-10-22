@@ -1,0 +1,42 @@
+{
+  "type": "function",
+  "name": "query_directory",
+  "description": "Count, list, group, filter, or select directory users. The server calculates all answers. There are no write operations. Use unsupported when the request cannot be expressed accurately. Empty groups match everyone; groups are ORed, conditions within each group are ANDed. Values for text matching are case-insensitive. Dates use ISO 8601 UTC.",
+  "strict": true,
+  "parameters": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "intent": { "type": "string", "enum": ["answer", "filter", "select", "unsupported"] },
+      "metric": { "type": "string", "enum": ["count", "list", "breakdown"] },
+      "group_by": { "type": "string", "enum": ["status", "job_position", "email_domain"] },
+      "groups": {
+        "type": "array",
+        "maxItems": 8,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "conditions": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "field": { "type": "string", "enum": ["full_name", "email", "job_position", "status", "last_login_at"] },
+                  "operator": { "type": "string", "enum": ["equals", "not_equals", "contains", "starts_with", "ends_with", "before", "after", "missing", "present"] },
+                  "value": { "type": "string", "maxLength": 254 }
+                },
+                "required": ["field", "operator", "value"]
+              }
+            }
+          },
+          "required": ["conditions"]
+        }
+      }
+    },
+    "required": ["intent", "metric", "group_by", "groups"]
+  }
+}
