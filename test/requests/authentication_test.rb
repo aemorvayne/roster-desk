@@ -75,6 +75,13 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
     assert_select 'table tbody tr', count: 1
   end
 
+  def test_missing_or_structured_credentials_do_not_crash_authentication
+    submit_form(new_session_path, session_path, {})
+    assert_response :unprocessable_content
+    submit_form(new_session_path, session_path, email: { value: 'sam@example.com' }, password: ['x'])
+    assert_response :unprocessable_content
+  end
+
   def register(**attributes)
     submit_form(new_registration_path, registration_path, user: { full_name: 'New Member', **attributes })
   end

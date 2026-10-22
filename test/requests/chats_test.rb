@@ -40,7 +40,7 @@ class ChatsTest < ActionDispatch::IntegrationTest
     sign_in
     stub_plan(plan(intent: 'filter', groups: [group(condition('status', 'equals', 'blocked'))]))
     ask('Show blocked users')
-    assert_select 'tbody tr', count: 0
+    assert_select 'tbody input[type="checkbox"]', count: 0
     assert_select '.chat-answer', text: '0 users shown.'
   end
 

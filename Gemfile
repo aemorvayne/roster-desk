@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '4.0.7'
 
-gem 'bcrypt', '~> 3.1'
+gem 'argon2', '~> 2.3'
 gem 'json_schemer', '~> 2.5'
 gem 'openai', '~> 0.110'
 gem 'pg', '~> 1.7'

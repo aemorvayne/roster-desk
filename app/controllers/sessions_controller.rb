@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   def new; end
 
   def create
-    user = User.authenticate_by(email: params[:email], password: params[:password])
+    user = authenticated_user
     return reject_login unless user&.active?
     reset_session
     session[:login_id] = Session.start(user).id
@@ -17,6 +17,11 @@ class SessionsController < ApplicationController
   end
 
   private
+  def authenticated_user
+    credentials = params.permit(:email, :password)
+    User.authenticate_by(email: credentials[:email], password: credentials[:password])
+  end
+
   def reject_login
     flash.now[:alert] = 'Email or password is incorrect, or this account is blocked.'
     render :new, status: :unprocessable_content

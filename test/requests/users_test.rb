@@ -39,6 +39,13 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_select 'tbody', /Never signed in/
   end
 
+  def test_malformed_identifiers_cannot_delete_real_users
+    user = sign_in
+    assert_bulk_error('delete', ["#{user.id}garbage"], 'Select users using the checkboxes.')
+    assert_bulk_error('delete', { 'id' => user.id }, 'Select users using the checkboxes.')
+    assert User.exists?(user.id)
+  end
+
   def assert_bulk_status(user, action, status)
     bulk_action(action, [user.id])
     assert_redirected_to root_path

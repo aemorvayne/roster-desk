@@ -1,8 +1,6 @@
 class DirectoryAssistant
   MAX_QUESTION_LENGTH = 1200
-  class Error < StandardError
-  end
-
+  Error = Class.new(StandardError)
   def initialize(planner:)
     @planner = planner
   end

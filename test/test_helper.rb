@@ -7,7 +7,6 @@ require 'minitest/mock'
 require 'webmock/minitest'
 
 WebMock.disable_net_connect!(allow_localhost: true)
-ActiveModel::SecurePassword.min_cost = true
 ActiveRecord::Migration.verbose = false
 ActiveRecord::Base.connection.drop_table(:sessions, if_exists: true)
 ActiveRecord::Base.connection.drop_table(:users, if_exists: true)

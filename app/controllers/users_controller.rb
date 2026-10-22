@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   rescue_from BulkUsers::InvalidSelection, with: :invalid_selection
   def index
-    @users = User.recent
+    @users = User.directory_order(params[:sort])
   end
 
   def bulk

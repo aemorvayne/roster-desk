@@ -61,3 +61,18 @@
 .form-check-input {
   transition: none;
 }
+.table thead a {
+  color: inherit;
+  text-decoration: none;
+}
+.table thead a:hover {
+  text-decoration: underline;
+}
+.chat-answer,
+.chat-question {
+  overflow-wrap: anywhere;
+}
+.assistant-panel pre {
+  max-height: 14rem;
+  white-space: pre-wrap;
+}
