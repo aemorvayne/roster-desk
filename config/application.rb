@@ -8,9 +8,10 @@ Bundler.require(*Rails.groups)
 
 module RosterDesk
   class Application < Rails::Application
+    SESSION_SECRET_BYTES = 64
     config.load_defaults 8.1
     config.eager_load = Rails.env.production?
-    config.secret_key_base = SecureRandom.hex(64)
+    config.secret_key_base = SecureRandom.hex(SESSION_SECRET_BYTES)
     config.cache_store = :memory_store
     config.active_record.schema_format = :sql
     config.active_record.dump_schema_after_migration = false

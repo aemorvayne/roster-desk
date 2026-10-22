@@ -16,14 +16,16 @@ class ChatsController < ApplicationController
   end
 
   def assistant_error(error)
-    @users = User.recent
-    flash.now[:alert] = error.message
-    render 'users/index', status: :unprocessable_content
+    render_error(error.message, :unprocessable_content)
   end
 
   def rate_limited
+    render_error('Please wait a minute before asking another question.', :too_many_requests)
+  end
+
+  def render_error(message, status)
     @users = User.recent
-    flash.now[:alert] = 'Please wait a minute before asking another question.'
-    render 'users/index', status: :too_many_requests
+    flash.now[:alert] = message
+    render 'users/index', status: status
   end
 end
