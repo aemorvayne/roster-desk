@@ -19,10 +19,13 @@ class BrowserTestCase < ActiveSupport::TestCase
   include Rails.application.routes.url_helpers
   include Capybara::DSL
   include Capybara::Minitest::Assertions
+  MOBILE_HEIGHT = 844
+  DEVICE_SCALE = 1
   def setup
     super
     Capybara.current_driver = :headless_chrome
     page.driver.browser.manage.window.resize_to(1440, 1000)
+    page.driver.browser.execute_cdp('Emulation.clearDeviceMetricsOverride')
   end
 
   def teardown
@@ -38,5 +41,10 @@ class BrowserTestCase < ActiveSupport::TestCase
     fill_in 'Password', with: 'x'
     click_button 'Sign in'
     assert_text 'Your people'
+  end
+
+  def mobile_viewport(width)
+    page.driver.browser.execute_cdp('Emulation.setDeviceMetricsOverride', width: width, height: MOBILE_HEIGHT,
+                                                                          deviceScaleFactor: DEVICE_SCALE, mobile: true)
   end
 end

@@ -1,6 +1,6 @@
 <div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-4">
   <div><p class="eyebrow mb-2">DIRECTORY</p><h1 class="h2 mb-1">Your people</h1><p class="text-secondary mb-0">A clear view of who’s here and who has access.</p></div>
-  <span class="badge text-bg-light border px-3 py-2"><%= @users.count %> members</span>
+  <span class="badge text-bg-light border px-3 py-2"><%= pluralize(@users.count, 'member') %></span>
 </div>
 <% if @report&.intent == 'filter' %>
   <div class="alert alert-light border d-flex justify-content-between">Filtered directory <%= link_to 'Clear filter', root_path %></div>

@@ -76,3 +76,19 @@
   max-height: 14rem;
   white-space: pre-wrap;
 }
+.table-responsive {
+  max-height: 32rem;
+}
+.table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.table td:nth-child(2) {
+  min-width: 12rem;
+}
+@media (max-width: 600px) {
+  .table-responsive {
+    max-height: 22rem;
+  }
+}

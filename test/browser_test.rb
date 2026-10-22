@@ -11,7 +11,7 @@ class BrowserTest < BrowserTestCase
 
   def test_empty_selection_and_mobile_layout
     browser_sign_in(create_user)
-    page.driver.browser.manage.window.resize_to(390, 844)
+    mobile_viewport(390)
     refute page.evaluate_script('document.documentElement.scrollWidth > window.innerWidth')
     check 'Select all users'
     clear_selection
@@ -23,6 +23,14 @@ class BrowserTest < BrowserTestCase
     assert_text 'Your account is ready'
     browser_sign_in(User.find_by!(email: 'new@example.com'))
     assert_selector 'tbody tr', count: 1
+  end
+
+  def test_narrow_mobile_table_scrolls_without_overflowing_the_page
+    browser_sign_in(create_user)
+    mobile_viewport(320)
+    assert_equal 320, page.evaluate_script('window.innerWidth')
+    refute page.evaluate_script('document.documentElement.scrollWidth > window.innerWidth')
+    assert page.evaluate_script('document.querySelector(".table-responsive").scrollWidth > window.innerWidth')
   end
 
   def complete_registration
