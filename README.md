@@ -18,3 +18,5 @@ Open **http://localhost:3000** and create an account. PostgreSQL runs locally on
 Run `mise run check` for tests, coverage, formatting, linting, and privacy checks. Browser tests need Chrome. Passwords may be one character; Rails accepts up to 72 bytes.
 
 Ask the directory for counts, lists, or grouped totals—or ask it to filter and select users. Set `OPENAI_API_KEY` privately to enable chat; `OPENAI_MODEL` defaults to `gpt-4.1-mini`. Questions go to OpenAI; Rails validates the query and calculates the answer. The interpreted query is visible beneath each answer.
+
+[Deploy on Render](https://dashboard.render.com/blueprint/new?repo=https://github.com/aemorvayne/roster-desk) using the included Blueprint. It provisions the web app and PostgreSQL and prompts for your OpenAI key. Free databases expire after 30 days; free web services sleep when idle. Keep a backup or upgrade before the database expires.

@@ -13,6 +13,7 @@ module RosterDesk
     config.secret_key_base = SecureRandom.hex(64)
     config.cache_store = :memory_store
     config.active_record.schema_format = :sql
+    config.active_record.dump_schema_after_migration = false
     config.filter_parameters += %i[password email full_name job_position question]
     config.session_store :cookie_store, key: '_roster_desk', same_site: :lax, secure: Rails.env.production?
     config.action_dispatch.default_headers['Content-Security-Policy'] =
