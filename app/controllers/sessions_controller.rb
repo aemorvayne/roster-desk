@@ -5,8 +5,7 @@ class SessionsController < ApplicationController
   def create
     user = authenticated_user
     return reject_login unless user&.active?
-    reset_session
-    session[:login_id] = Session.start(user).id
+    start_session(user)
     redirect_to root_path, notice: 'Welcome back.'
   end
 
@@ -17,6 +16,12 @@ class SessionsController < ApplicationController
   end
 
   private
+  def start_session(user)
+    reset_session
+    session[:login_id] = Session.start(user).id
+    session[:user_id] = user.id
+  end
+
   def authenticated_user
     credentials = params.permit(:email, :password)
     User.authenticate_by(email: credentials[:email], password: credentials[:password])

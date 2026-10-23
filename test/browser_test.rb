@@ -59,7 +59,7 @@ class BrowserTest < BrowserTestCase
     check 'Select all users'
     assert_selector '[data-selection-target="count"]', text: '2 selected'
     click_button 'Block'
-    assert_text 'Your account is no longer signed in'
+    assert_text 'Your account is blocked.'
     assert_equal ['blocked'], User.distinct.pluck(:status)
   end
 
