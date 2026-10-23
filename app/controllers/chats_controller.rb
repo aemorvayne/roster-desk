@@ -1,8 +1,12 @@
 class ChatsController < ApplicationController
   REQUEST_LIMIT = 10
   REQUEST_WINDOW = 1.minute
-  rate_limit to: REQUEST_LIMIT, within: REQUEST_WINDOW, by: -> { current_user.id }, with: :rate_limited
+  rate_limit to: REQUEST_LIMIT, within: REQUEST_WINDOW, by: -> { current_user.id }, with: :rate_limited, only: :create
   rescue_from DirectoryAssistant::Error, with: :assistant_error
+  def show
+    redirect_to root_path
+  end
+
   def create
     @question = params.expect(:question)
     @report = assistant.call(@question)

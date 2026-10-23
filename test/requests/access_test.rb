@@ -36,6 +36,18 @@ class AccessTest < ActionDispatch::IntegrationTest
     assert_not_requested :post, API_URL
   end
 
+  def test_reopening_chat_rejects_blocked_and_deleted_accounts
+    assert_reopened_chat_rejected('block', 'Your account is blocked.')
+    assert_reopened_chat_rejected('delete', 'Your account has been deleted.')
+  end
+
+  def assert_reopened_chat_rejected(operation, message)
+    prepare_revoked_user(operation)
+    get chat_path
+    assert_access_message(message)
+    assert_not_requested :post, API_URL
+  end
+
   def test_revoked_sessions_do_not_recover_when_the_account_is_unblocked
     prepare_revoked_user('block')
     User.update_all(status: 'active')

@@ -19,6 +19,22 @@ class ChatBrowserTest < BrowserTestCase
     end
   end
 
+  def test_reopening_a_submitted_chat_keeps_the_app_usable
+    with_environment('OPENAI_API_KEY' => 'placeholder') do
+      prepare_directory
+      ask_to_select
+      reopen_chat
+    end
+  end
+
+  def reopen_chat
+    visit page.current_url
+    assert_current_path root_path
+    assert_selector '#assistant-heading', text: 'Assistant'
+    assert_selector 'tbody tr', count: 3
+    assert_requested :post, API_URL, times: 1
+  end
+
   def prepare_directory
     browser_sign_in(create_user)
     create_user(full_name: 'Pat River', email: 'pat@example.org')
