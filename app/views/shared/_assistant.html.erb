@@ -1,20 +1,22 @@
-<section class="assistant-panel card p-4 mt-4" aria-labelledby="assistant-heading">
-  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
-    <h2 class="h5 mb-0" id="assistant-heading">Ask your directory</h2>
-    <span class="badge text-bg-light border">Assistant</span>
+<aside class="assistant-panel card p-4" aria-labelledby="assistant-heading">
+  <p class="eyebrow mb-2">CHAT</p>
+  <h2 class="h5 mb-2" id="assistant-heading">Assistant</h2>
+  <p class="small text-secondary">Ask about users, or tell me who to filter or select.</p>
+  <div class="chat-messages mb-4">
+    <% if @report %>
+      <div class="chat-question rounded p-3 mb-3"><span class="small fw-semibold">You</span><p class="mb-0"><%= @question %></p></div>
+      <div class="chat-answer rounded p-3" role="status"><%= @report.text %></div>
+    <% else %>
+      <p class="small text-secondary mb-0">Try “How many users are blocked?”</p>
+    <% end %>
   </div>
-  <p class="small text-secondary">Try “How many users are blocked?” or “Select users whose emails start with s or p.”</p>
-  <% if @report %>
-    <div class="chat-question small mb-2"><strong>You:</strong> <%= @question %></div>
-    <div class="chat-answer border-start border-3 ps-3 mb-3" role="status"><%= @report.text %></div>
-    <details class="small mb-3"><summary>Query used</summary><pre class="mt-2 mb-0"><%= JSON.pretty_generate(@report.plan) %></pre></details>
-  <% end %>
-  <%= form_with url: chat_path, class: 'd-flex gap-2 align-items-start' do |form| %>
-    <div class="flex-grow-1">
+  <%= form_with url: chat_path, class: 'd-flex flex-column gap-2', data: { controller: 'chat' } do |form| %>
+    <div>
       <%= form.label :question, 'Your question', class: 'visually-hidden' %>
-      <%= form.text_area :question, rows: 2, maxlength: DirectoryAssistant::MAX_QUESTION_LENGTH, required: true, placeholder: 'Ask a question, filter the table, or select people…', class: 'form-control' %>
+      <%= form.text_area :question, rows: 3, maxlength: DirectoryAssistant::MAX_QUESTION_LENGTH, required: true, placeholder: 'Type a message…', class: 'form-control', data: { action: 'keydown->chat#send' } %>
     </div>
-    <%= form.submit 'Ask', class: 'btn btn-primary' %>
+    <%= form.submit 'Send', class: 'btn btn-primary align-self-end' %>
   <% end %>
-  <p class="small text-secondary mt-2 mb-0">Questions are sent to OpenAI. Answers are calculated from the directory; check “Query used” if the interpretation looks off.</p>
-</section>
+  <p class="small text-secondary mt-2 mb-0">Enter to send · Shift+Enter for a new line.</p>
+  <p class="small text-secondary mt-2 mb-0">Questions are sent to OpenAI.</p>
+</aside>

@@ -26,4 +26,14 @@ class SelectionController extends Controller {
   }
 }
 
-Application.start().register('selection', SelectionController);
+class ChatController extends Controller {
+  send(event) {
+    if (event.key !== 'Enter' || event.shiftKey || event.isComposing) return;
+    event.preventDefault();
+    this.element.requestSubmit();
+  }
+}
+
+const application = Application.start();
+application.register('selection', SelectionController);
+application.register('chat', ChatController);

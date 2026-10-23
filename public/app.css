@@ -53,9 +53,6 @@
   background: #f3e8e8;
   color: #874242;
 }
-.icon-button {
-  min-width: 2.65rem;
-}
 .btn,
 .form-control,
 .form-check-input {
@@ -71,10 +68,31 @@
 .chat-answer,
 .chat-question {
   overflow-wrap: anywhere;
-}
-.assistant-panel pre {
-  max-height: 14rem;
   white-space: pre-wrap;
+}
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22rem;
+  gap: 1.5rem;
+  align-items: start;
+}
+.users-panel {
+  min-width: 0;
+}
+.assistant-panel {
+  position: sticky;
+  top: 1.5rem;
+}
+.chat-messages {
+  min-height: 10rem;
+  max-height: 24rem;
+  overflow-y: auto;
+}
+.chat-question {
+  background: #f0f3f6;
+}
+.chat-answer {
+  background: #edf5f3;
 }
 .table-responsive {
   max-height: 32rem;
@@ -86,6 +104,14 @@
 }
 .table td:nth-child(2) {
   min-width: 12rem;
+}
+@media (max-width: 991.98px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .assistant-panel {
+    position: static;
+  }
 }
 @media (max-width: 600px) {
   .table-responsive {

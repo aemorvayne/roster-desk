@@ -5,7 +5,7 @@ class ReportTest < ActiveSupport::TestCase
   include AssistantResponses
   def test_counts_and_lists_matching_users
     user = create_user
-    assert_equal 'Matching users: 1.', report.text
+    assert_equal '1 user in total.', report.text
     assert_includes report(metric: 'list').text, 'Sam Rowan (sam@example.com)'
     assert_equal [user.id], report.visible_users.ids
     assert_empty report.selected_ids
@@ -14,22 +14,22 @@ class ReportTest < ActiveSupport::TestCase
   def test_counts_more_rows_than_the_list_limit
     populate_users
     result = report(metric: 'list')
-    assert_includes result.text, 'Matching users: 21. Showing 20:'
+    assert_includes result.text, '21 users in total. Here are 20 of them:'
   end
 
   def test_groups_by_status_job_title_and_email_domain
     create_user
     create_user(email: 'pat@example.org', job_position: 'Editor', status: 'blocked')
-    assert_equal '2 users. active: 1; blocked: 1', report(metric: 'breakdown').text
-    assert_equal '2 users. Not specified: 1; Editor: 1', report(metric: 'breakdown', group_by: 'job_position').text
-    assert_equal '2 users. example.com: 1; example.org: 1', report(metric: 'breakdown', group_by: 'email_domain').text
+    assert_breakdown '2 users in total: Active: 1; Blocked: 1.', 'status'
+    assert_breakdown '2 users in total: Not specified: 1; Editor: 1.', 'job_position'
+    assert_breakdown '2 users in total: example.com: 1; example.org: 1.', 'email_domain'
   end
 
   def test_selection_and_filtering_do_not_change_database_records
     user = create_user
     assert_equal [user.id], report(intent: 'select').selected_ids
-    assert_equal '1 user selected.', report(intent: 'select').text
-    assert_equal '1 user shown.', report(intent: 'filter').text
+    assert_equal 'Selected 1 user.', report(intent: 'select').text
+    assert_equal 'Showing 1 user.', report(intent: 'filter').text
     assert_equal [user.id], report(intent: 'filter').visible_users.ids
   end
 
@@ -40,6 +40,10 @@ class ReportTest < ActiveSupport::TestCase
 
   def report(**values)
     DirectoryAssistant::Report.new(plan(**values), User.all)
+  end
+
+  def assert_breakdown(expected, field)
+    assert_equal expected, report(metric: 'breakdown', group_by: field).text
   end
 
   def populate_users

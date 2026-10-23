@@ -20,12 +20,12 @@ class ChatsTest < ActionDispatch::IntegrationTest
     assert_not_requested :post, API_URL
   end
 
-  def test_answers_with_calculated_counts_and_shows_the_query
+  def test_answers_with_calculated_counts_without_query_details
     sign_in
     stub_plan
     ask('How many users?')
-    assert_select '.chat-answer', text: 'Matching users: 1.'
-    assert_select 'details', /Query used/
+    assert_select '.chat-answer', text: '1 user in total.'
+    assert_select 'details', count: 0
   end
 
   def test_selects_matching_checkboxes
@@ -33,7 +33,7 @@ class ChatsTest < ActionDispatch::IntegrationTest
     stub_plan(plan(intent: 'select'))
     ask('Select everyone')
     assert_select "input[name='user_ids[]'][value='#{user.id}'][checked]"
-    assert_select '.chat-answer', text: '1 user selected.'
+    assert_select '.chat-answer', text: 'Selected 1 user.'
   end
 
   def test_filters_the_table_and_reports_no_matches
@@ -41,7 +41,7 @@ class ChatsTest < ActionDispatch::IntegrationTest
     stub_plan(plan(intent: 'filter', groups: [group(condition('status', 'equals', 'blocked'))]))
     ask('Show blocked users')
     assert_select 'tbody input[type="checkbox"]', count: 0
-    assert_select '.chat-answer', text: '0 users shown.'
+    assert_select '.chat-answer', text: 'Showing 0 users.'
   end
 
   def test_shows_service_failures_without_losing_the_directory

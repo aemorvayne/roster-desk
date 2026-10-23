@@ -14,7 +14,7 @@ class AssistantTest < ActiveSupport::TestCase
   def test_counts_database_results_and_rejects_empty_or_long_questions
     stub_plan
     assistant = DirectoryAssistant.new(planner: configured_planner)
-    assert_equal 'Matching users: 0.', assistant.call('How many?').text
+    assert_equal '0 users in total.', assistant.call('How many?').text
     assert_raises(DirectoryAssistant::Error) { assistant.call(' ') }
     assert_raises(DirectoryAssistant::Error) { assistant.call('a' * DirectoryAssistant::MAX_QUESTION_LENGTH.next) }
   end

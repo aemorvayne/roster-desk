@@ -39,7 +39,12 @@ class BrowserTestCase < ActiveSupport::TestCase
     visit new_session_path
     fill_in 'Email', with: user.email
     fill_in 'Password', with: 'x'
+    submit_sign_in
+  end
+
+  def submit_sign_in
     click_button 'Sign in'
+    assert_current_path root_path
     assert_text 'Your people'
   end
 

@@ -63,8 +63,16 @@ class UsersTest < ActionDispatch::IntegrationTest
   def assert_table_structure
     assert_select 'thead input[type="checkbox"]', count: 1
     assert_select 'tbody input[type="checkbox"]', count: 2
-    assert_select '[role="toolbar"] button', count: 3
+    assert_toolbar_labels
     assert_select 'tbody button', count: 0
     assert_select 'tbody label', count: 0
+  end
+
+  def assert_toolbar_labels
+    assert_select('[role="toolbar"] button') { |buttons| assert_equal %w[Block Unblock Delete], buttons.map(&:text) }
+    assert_select '[role="toolbar"] img', count: 0
+    assert_select '#assistant-heading', text: 'Assistant'
+    assert_select '.assistant-panel', /Enter to send.*Shift\+Enter/m
+    assert_select '.assistant-panel', { text: /directory|Query used/i, count: 0 }
   end
 end

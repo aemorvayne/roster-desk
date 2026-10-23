@@ -29,8 +29,8 @@ class ChatBrowserTest < BrowserTestCase
     groups = [group(condition('email', 'starts_with', 's')), group(condition('email', 'starts_with', 'p'))]
     stub_plan(plan(intent: 'select', groups: groups))
     fill_in 'Your question', with: 'Select users with emails starting with s or p'
-    click_button 'Ask'
-    assert_selector '.chat-answer', text: '2 users selected.'
+    click_button 'Send'
+    assert_selector '.chat-answer', text: 'Selected 2 users.'
   end
 
   def assert_selection
@@ -44,8 +44,8 @@ class ChatBrowserTest < BrowserTestCase
   def ask_to_filter
     stub_plan(plan(intent: 'filter', groups: [group(condition('status', 'equals', 'blocked'))]))
     fill_in 'Your question', with: 'Show blocked users'
-    click_button 'Ask'
-    assert_selector '.chat-answer', text: '0 users shown.'
+    click_button 'Send'
+    assert_selector '.chat-answer', text: 'Showing 0 users.'
   end
 
   def assert_empty_table

@@ -17,7 +17,7 @@ Open **http://localhost:3000** and create an account. PostgreSQL runs locally on
 
 Run `mise run check` for tests, coverage, formatting, linting, and privacy checks. Browser tests need Chrome. Any non-empty password is accepted and stored using Argon2.
 
-Ask the directory for counts, lists, or grouped totals—or ask it to filter and select users. Set `OPENAI_API_KEY` privately to enable chat; `OPENAI_MODEL` defaults to `gpt-4.1-mini`. Questions go to OpenAI; Rails validates the query and calculates the answer. The interpreted query is visible beneath each answer.
+Chat with the assistant beside the user list for counts, lists, filtering, and selection. Press Enter to send or Shift+Enter for a new line. Set `OPENAI_API_KEY` privately to enable chat; `OPENAI_MODEL` defaults to `gpt-4.1-mini`. Questions go to OpenAI; answers use the actual user records.
 
 [Deploy on Render](https://dashboard.render.com/blueprint/new?repo=https://github.com/aemorvayne/roster-desk) using the included Blueprint. It provisions the web app and PostgreSQL and prompts for your OpenAI key. Free databases expire after 30 days; free web services sleep when idle. Keep a backup or upgrade before the database expires.
 
